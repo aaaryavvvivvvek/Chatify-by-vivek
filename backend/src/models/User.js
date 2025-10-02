@@ -28,7 +28,11 @@ nativeLanguage:{
    type:String,
    default:"", 
 },
-isOnboard:{
+learningLanguage:{
+   type:String,
+   default:"",
+},
+isOnboarded:{
    type:Boolean,
    default:false, 
 },

@@ -1,5 +1,5 @@
  import  useAuthUser from "../hooks/useAuthUser"
- import {useLocation,Link} from "react-router"
+ import {useLocation,Link} from "react-router-dom"
 
  import {ShipWheelIcon,BellIcon, LogOutIcon} from "lucide-react"
  import ThemeSelector from "./ThemeSelector.jsx"
@@ -34,7 +34,7 @@ const Navbar=()=>{
                      </div>
 
                     )}
-                  <div className="flex items-center gap-3 sm:gap-4" >
+                  <div className="flex items-center gap-3 sm:gap-4 ml-auto" >
                              <Link to={"/notification"}>
                              <button className="btn btn-ghost btn-circle">
                                 <BellIcon className="h-6 w-6 text-base-content opacity-70"></BellIcon>

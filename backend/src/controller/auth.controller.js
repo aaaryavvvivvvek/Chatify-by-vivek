@@ -96,7 +96,12 @@ export async function login(req,res){
 }
 
 export function logout(req,res){
-   res.clearCookie("jwt")
+   res.clearCookie("jwt", {
+     httpOnly: true,
+     sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+     secure: process.env.NODE_ENV === "production",
+     path: "/",
+   });
    res.status(200).json({success : true ,message :"Logout successful"}) ;
 }
 
@@ -122,7 +127,7 @@ export async function onboard(req,res){
 
  const updatedUser = await User.findByIdAndUpdate(userId,{
   ...req.body ,
-  isOnboard: true ,
+  isOnboarded: true ,
  },{new:true})
 
  if(!updatedUser) return res.status(404).json({message:"user not found"});
@@ -137,7 +142,7 @@ export async function onboard(req,res){
 
 
    }catch(error){
-   console.log("error updating stream user during onboarding:",streamError.message);
+  console.log("error updating stream user during onboarding:", error?.message);
    }
 
  res.status(200).json({success:true,user:updatedUser});

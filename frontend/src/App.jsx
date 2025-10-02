@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import NotificationPage from "./pages/NotificationPage.jsx";
+import NotificationsPage from "./pages/NotificationsPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import Layout from "./components/Layout.jsx";
@@ -47,12 +47,48 @@ const App =()=>{
        )):(
         <Navigate to="/login"/>
        )}/>
-       <Route path="/notification" element={isAuthenticated ?<NotificationPage/> :<Navigate to="/login"/>}/>
+       <Route path="/friends" element={ isAuthenticated && isOnboarded ? (
+         <Layout showSidebar={true}>
+            <HomePage/>
+         </Layout>
+       ):(
+         <Navigate to={!isAuthenticated ? "/login" :"/onboarding"}></Navigate>
+       )}/>
+       <Route path="/notification" element={ isAuthenticated && isOnboarded ? (
+         <Layout showSidebar={true}>
+            <NotificationsPage/>
+
+         </Layout>
+
+       ):(
+         <Navigate to={!isAuthenticated ? "/login" :"/onboarding"}></Navigate>
+
+       )}/>
        <Route path="/login"
         element={
           !isAuthenticated ?<LoginPage/>:<Navigate to={isOnboarded ? "/" : "/onboarding"}/>}/>
-       <Route path="/chat" element={isAuthenticated ?<ChatPage/>:<Navigate to="/login"/>}/>
-       <Route path="/call" element={!isAuthenticated ?<CallPage/>:<Navigate to="/login"/>}/>
+       <Route path="/call/:id" element={isAuthenticated && isOnboarded ? (
+             <CallPage/>
+
+       ):(
+<Navigate to={!isAuthenticated ? "/login" :"/onboarding"}/>
+
+       )}/>
+       
+       <Route 
+       path="/chat/:id" 
+       element={
+            isAuthenticated && isOnboarded ? (
+                       <Layout showSidebar={false}>
+            <ChatPage/>
+
+         </Layout>
+
+
+            ):(
+              <Navigate to={!isAuthenticated ? "/login" :"onboarding"}/>
+            )
+       }/>
         </Routes>
       
       <Toaster/> 
